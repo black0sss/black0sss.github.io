@@ -3,21 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رسائل تحفيزية للطلاب</title>
+<title>Campus Motivation</title>
 
 <style>
 :root{
-  --primary:#6C63FF;
-  --secondary:#00C9A7;
-  --glass:rgba(255,255,255,0.15);
+  --bg1:#0f2027;
+  --bg2:#203a43;
+  --bg3:#2c5364;
+  --glass:rgba(255,255,255,0.08);
   --text:#ffffff;
+  --accent:#00f5d4;
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-family:'Segoe UI',sans-serif;
 }
 
 body{
@@ -25,80 +27,82 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background: linear-gradient(135deg,#6C63FF,#00C9A7);
+  background: linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
   direction:rtl;
+  color:var(--text);
   overflow:hidden;
 }
 
 .container{
   width:95%;
-  max-width:420px;
+  max-width:430px;
   padding:25px;
-  border-radius:25px;
+  border-radius:30px;
   background:var(--glass);
-  backdrop-filter: blur(20px);
-  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  backdrop-filter: blur(25px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.4);
   text-align:center;
-  animation:fadeIn 1s ease;
+  animation:fadeUp 1s ease;
 }
 
 h1{
-  color:var(--text);
-  margin-bottom:20px;
   font-size:22px;
-  font-weight:600;
+  margin-bottom:20px;
+  letter-spacing:1px;
 }
 
-.buttons{
+.grid{
   display:grid;
-  gap:12px;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
 button{
   padding:14px;
   border:none;
-  border-radius:15px;
-  font-size:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.1);
+  color:white;
   font-weight:600;
   cursor:pointer;
-  background:white;
   transition:0.3s ease;
+  backdrop-filter:blur(10px);
 }
 
 button:hover{
-  transform:scale(1.05);
-  background:var(--primary);
-  color:white;
+  transform:translateY(-4px);
+  background:var(--accent);
+  color:#000;
 }
 
-.message-box{
+.message{
   margin-top:20px;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.2);
-  color:white;
-  font-size:17px;
-  min-height:60px;
+  padding:20px;
+  border-radius:20px;
+  min-height:80px;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  transition:0.4s ease;
+  background:rgba(255,255,255,0.12);
+  font-size:17px;
+  line-height:1.6;
   opacity:0;
+  transform:translateY(10px);
+  transition:0.4s ease;
 }
 
-.message-box.show{
+.message.show{
   opacity:1;
   transform:translateY(0);
 }
 
-.footer{
-  margin-top:15px;
+.counter{
+  margin-top:10px;
   font-size:12px;
-  color:rgba(255,255,255,0.7);
+  opacity:0.7;
 }
 
-@keyframes fadeIn{
+@keyframes fadeUp{
   from{opacity:0; transform:translateY(20px);}
   to{opacity:1; transform:translateY(0);}
 }
@@ -107,64 +111,89 @@ button:hover{
 <body>
 
 <div class="container">
-  <h1>📍 حدد موقعك داخل الجامعة</h1>
+  <h1>📍 اختر موقعك داخل الحرم</h1>
 
-  <div class="buttons">
-    <button onclick="showMessage('services')">خدمات الطلبة</button>
-    <button onclick="showMessage('F')">مبنى F</button>
-    <button onclick="showMessage('E')">مبنى E</button>
-    <button onclick="showMessage('G')">مبنى G</button>
+  <div class="grid">
+    <button onclick="generate('class')">فصل دراسي</button>
+    <button onclick="generate('hall')">ممر جامعي</button>
+    <button onclick="generate('cafe')">الكافيتيريا</button>
+    <button onclick="generate('services')">خدمات الطلبة</button>
+    <button onclick="generate('F')">مبنى F</button>
+    <button onclick="generate('E')">مبنى E</button>
+    <button onclick="generate('G')">مبنى G</button>
   </div>
 
-  <div class="message-box" id="messageBox"></div>
-
-  <div class="footer">
-    صنع بحب لدعم الطلاب 💚
-  </div>
+  <div class="message" id="messageBox"></div>
+  <div class="counter" id="counter"></div>
 </div>
 
 <script>
-const messages = {
-  services:[
-    "كل خطوة إدارية تقربك من حلمك 🎓",
-    "اصبر… النجاح يحتاج إجراءات 💪",
-    "أنت تبني مستقبلك الآن ✨"
-  ],
-  F:[
-    "التركيز الآن = نجاح لاحق 🚀",
-    "أنت أقوى مما تظن 💥",
-    "حلمك يستحق تعب اليوم 🔥"
-  ],
-  E:[
-    "كل محاضرة تصنع فرق 🎯",
-    "استمر… أنت على الطريق الصحيح 🌟",
-    "أيام الدراسة تصنع سنين النجاح 📚"
-  ],
-  G:[
-    "لا تستسلم… القادم أجمل 💚",
-    "ثق بنفسك دائمًا ✨",
-    "كل تعب اليوم راحة غدًا 💫"
-  ]
-};
 
-function showMessage(location){
-  const box = document.getElementById("messageBox");
-  const random = messages[location][Math.floor(Math.random()*messages[location].length)];
-  
-  box.classList.remove("show");
-  
-  setTimeout(()=>{
-    box.innerText = random;
-    box.classList.add("show");
-    vibrate();
-  },200);
+// أجزاء الجمل (تتكون عشوائياً = آلاف الاحتمالات)
+const openings = [
+"أنت اليوم","كل خطوة","كل دقيقة","وجودك هنا","اجتهادك","تعبك","حضورك","محاولتك"
+];
+
+const actions = [
+"يصنع مستقبلك","يقربك من حلمك","يبني نجاحك","يزيد قوتك","يغير حياتك","يرفع مستواك","يصنع فرقاً كبيراً"
+];
+
+const endings = [
+"فاستمر 💪","ولا تتوقف 🔥","وأنت قدها ✨","والقادم أجمل 🌟","ولا تنظر للخلف 🚀","فأنت مميز 🎯"
+];
+
+// تخزين الرسائل المستخدمة لمنع التكرار
+let usedMessages = new Set();
+let totalGenerated = 0;
+
+function generate(place){
+
+let message;
+let attempts = 0;
+
+// توليد جملة فريدة
+do{
+  const o = openings[Math.floor(Math.random()*openings.length)];
+  const a = actions[Math.floor(Math.random()*actions.length)];
+  const e = endings[Math.floor(Math.random()*endings.length)];
+  message = `${o} في ${placeName(place)} ${a} ${e}`;
+  attempts++;
+}while(usedMessages.has(message) && attempts < 500);
+
+usedMessages.add(message);
+totalGenerated++;
+
+showMessage(message);
 }
 
-function vibrate(){
-  if(navigator.vibrate){
-    navigator.vibrate(50);
-  }
+function placeName(code){
+switch(code){
+  case 'class': return "الفصل الدراسي";
+  case 'hall': return "الممر الجامعي";
+  case 'cafe': return "الكافيتيريا";
+  case 'services': return "خدمات الطلبة";
+  case 'F': return "مبنى F";
+  case 'E': return "مبنى E";
+  case 'G': return "مبنى G";
 }
+}
+
+function showMessage(text){
+const box = document.getElementById("messageBox");
+box.classList.remove("show");
+
+setTimeout(()=>{
+  box.innerText = text;
+  box.classList.add("show");
+  document.getElementById("counter").innerText =
+  `عدد الرسائل التي تم توليدها: ${totalGenerated}`;
+},200);
+
+if(navigator.vibrate){
+  navigator.vibrate(40);
+}
+}
+
 </script>
 
 </body>
