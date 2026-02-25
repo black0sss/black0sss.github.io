@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>رسائل تحفيزية للطلاب</title>
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    direction: rtl;
+    background-color: #f4f4f4;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#message {
+    margin-top: 20px;
+    font-size: 20px;
+    color: green;
+}
+</style>
+</head>
+<body>
+
+<h2>حدد موقعك 👇</h2>
+
+<button onclick="showMessage('services')">خدمات الطلبة</button>
+<button onclick="showMessage('F')">مبنى F</button>
+<button onclick="showMessage('E')">مبنى E</button>
+<button onclick="showMessage('G')">مبنى G</button>
+
+<div id="message"></div>
+
+<script>
+function showMessage(location) {
+
+    const messages = {
+        services: [
+            "لا تيأس، كل معاملة تقربك من هدفك 🎓",
+            "خطوة اليوم تصنع نجاح الغد ✨"
+        ],
+        F: [
+            "ركز… أنت قادر على التفوق 💪",
+            "كل محاضرة تقربك من حلمك 🎯"
+        ],
+        E: [
+            "استمر، تعبك اليوم راحة بكرة 🌟",
+            "أنت أقوى مما تعتقد 🚀"
+        ],
+        G: [
+            "النجاح يحتاج صبر، وأنت قدها 🔥",
+            "لا تستسلم، الطريق يستاهل 💚"
+        ]
+    };
+
+    const randomMessage = messages[location][
+        Math.floor(Math.random() * messages[location].length)
+    ];
+
+    document.getElementById("message").innerText = randomMessage;
+}
+</script>
+
+</body>
+</html>
