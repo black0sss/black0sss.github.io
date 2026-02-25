@@ -2,65 +2,168 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رسائل تحفيزية للطلاب</title>
+
 <style>
-body {
-    font-family: Arial;
-    text-align: center;
-    direction: rtl;
-    background-color: #f4f4f4;
+:root{
+  --primary:#6C63FF;
+  --secondary:#00C9A7;
+  --glass:rgba(255,255,255,0.15);
+  --text:#ffffff;
 }
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
-    cursor: pointer;
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
 }
-#message {
-    margin-top: 20px;
-    font-size: 20px;
-    color: green;
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#6C63FF,#00C9A7);
+  direction:rtl;
+  overflow:hidden;
+}
+
+.container{
+  width:95%;
+  max-width:420px;
+  padding:25px;
+  border-radius:25px;
+  background:var(--glass);
+  backdrop-filter: blur(20px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  text-align:center;
+  animation:fadeIn 1s ease;
+}
+
+h1{
+  color:var(--text);
+  margin-bottom:20px;
+  font-size:22px;
+  font-weight:600;
+}
+
+.buttons{
+  display:grid;
+  gap:12px;
+}
+
+button{
+  padding:14px;
+  border:none;
+  border-radius:15px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  background:white;
+  transition:0.3s ease;
+}
+
+button:hover{
+  transform:scale(1.05);
+  background:var(--primary);
+  color:white;
+}
+
+.message-box{
+  margin-top:20px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  font-size:17px;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transition:0.4s ease;
+  opacity:0;
+}
+
+.message-box.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.footer{
+  margin-top:15px;
+  font-size:12px;
+  color:rgba(255,255,255,0.7);
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
 <body>
 
-<h2>حدد موقعك 👇</h2>
+<div class="container">
+  <h1>📍 حدد موقعك داخل الجامعة</h1>
 
-<button onclick="showMessage('services')">خدمات الطلبة</button>
-<button onclick="showMessage('F')">مبنى F</button>
-<button onclick="showMessage('E')">مبنى E</button>
-<button onclick="showMessage('G')">مبنى G</button>
+  <div class="buttons">
+    <button onclick="showMessage('services')">خدمات الطلبة</button>
+    <button onclick="showMessage('F')">مبنى F</button>
+    <button onclick="showMessage('E')">مبنى E</button>
+    <button onclick="showMessage('G')">مبنى G</button>
+  </div>
 
-<div id="message"></div>
+  <div class="message-box" id="messageBox"></div>
+
+  <div class="footer">
+    صنع بحب لدعم الطلاب 💚
+  </div>
+</div>
 
 <script>
-function showMessage(location) {
+const messages = {
+  services:[
+    "كل خطوة إدارية تقربك من حلمك 🎓",
+    "اصبر… النجاح يحتاج إجراءات 💪",
+    "أنت تبني مستقبلك الآن ✨"
+  ],
+  F:[
+    "التركيز الآن = نجاح لاحق 🚀",
+    "أنت أقوى مما تظن 💥",
+    "حلمك يستحق تعب اليوم 🔥"
+  ],
+  E:[
+    "كل محاضرة تصنع فرق 🎯",
+    "استمر… أنت على الطريق الصحيح 🌟",
+    "أيام الدراسة تصنع سنين النجاح 📚"
+  ],
+  G:[
+    "لا تستسلم… القادم أجمل 💚",
+    "ثق بنفسك دائمًا ✨",
+    "كل تعب اليوم راحة غدًا 💫"
+  ]
+};
 
-    const messages = {
-        services: [
-            "لا تيأس، كل معاملة تقربك من هدفك 🎓",
-            "خطوة اليوم تصنع نجاح الغد ✨"
-        ],
-        F: [
-            "ركز… أنت قادر على التفوق 💪",
-            "كل محاضرة تقربك من حلمك 🎯"
-        ],
-        E: [
-            "استمر، تعبك اليوم راحة بكرة 🌟",
-            "أنت أقوى مما تعتقد 🚀"
-        ],
-        G: [
-            "النجاح يحتاج صبر، وأنت قدها 🔥",
-            "لا تستسلم، الطريق يستاهل 💚"
-        ]
-    };
+function showMessage(location){
+  const box = document.getElementById("messageBox");
+  const random = messages[location][Math.floor(Math.random()*messages[location].length)];
+  
+  box.classList.remove("show");
+  
+  setTimeout(()=>{
+    box.innerText = random;
+    box.classList.add("show");
+    vibrate();
+  },200);
+}
 
-    const randomMessage = messages[location][
-        Math.floor(Math.random() * messages[location].length)
-    ];
-
-    document.getElementById("message").innerText = randomMessage;
+function vibrate(){
+  if(navigator.vibrate){
+    navigator.vibrate(50);
+  }
 }
 </script>
 
